@@ -10,20 +10,16 @@ class Anagram {
 
     Anagram(String word) {
         this.word = word;
-        char[] chars = word
-                           .toLowerCase()
-                           .toCharArray();
+        var chars = word.toLowerCase().toCharArray();
         Arrays.sort(chars);
         this.chars = chars;
     }
 
     List<String> match(Collection<String> candidates) {
         List<String> anagrams = new LinkedList<>();
-        for (String candidate : candidates) {
+        for (var candidate : candidates) {
             if (!word.equalsIgnoreCase(candidate)) {
-                char[] chars = candidate
-                                   .toLowerCase()
-                                   .toCharArray();
+                var chars = candidate.toLowerCase().toCharArray();
                 Arrays.sort(chars);
                 if (Arrays.equals(this.chars, chars)) {
                     anagrams.add(candidate);
