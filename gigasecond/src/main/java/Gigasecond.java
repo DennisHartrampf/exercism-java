@@ -9,7 +9,7 @@ class Gigasecond {
     private final LocalDateTime moment;
 
     Gigasecond(LocalDate birthDate) {
-        this(birthDate.atTime(0, 0, 0));
+        this(birthDate.atStartOfDay());
     }
 
     Gigasecond(LocalDateTime birthDateTime) {
