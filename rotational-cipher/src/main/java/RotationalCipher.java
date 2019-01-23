@@ -1,3 +1,5 @@
+import java.util.stream.Collectors;
+
 class RotationalCipher {
 
     private static final int LOWER_A = 'a';
@@ -14,12 +16,11 @@ class RotationalCipher {
         return data
                    .chars()
                    .mapToObj(this::encodeChar)
-                   .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
-                   .toString();
+                   .collect(Collectors.joining());
     }
 
-    private char encodeChar(int aChar) {
-        return (char) (Character.isAlphabetic(aChar) ? shiftChar(aChar) : aChar);
+    private String encodeChar(int aChar) {
+        return String.valueOf((char) (Character.isAlphabetic(aChar) ? shiftChar(aChar) : aChar));
     }
 
     private int shiftChar(int aChar) {
