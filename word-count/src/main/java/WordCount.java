@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,14 +8,14 @@ import java.util.stream.Stream;
 class WordCount {
 
     private static final Pattern QUOTE_PATTERN = Pattern.compile("'+(.+)'+");
-    private static final String SPLIT_PATTERN = "[^a-zA-Z0-9\\-']+";
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("[^a-zA-Z0-9\\-']+");
 
     Map<String, Integer> phrase(String input) {
         return splitToWords(input).collect(toMapCounting());
     }
 
     private Stream<String> splitToWords(String input) {
-        return Arrays.stream(input.trim().split(SPLIT_PATTERN));
+        return SPLIT_PATTERN.splitAsStream(input.trim());
     }
 
     private Collector<String, ?, Map<String, Integer>> toMapCounting() {
