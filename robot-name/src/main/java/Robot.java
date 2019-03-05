@@ -28,15 +28,13 @@ class Robot {
 
     private String getUniqueRandomName() {
         String randomName;
-        int tries = 0;
-        do {
+        for (int tries = 0; tries < MAX_TRIES; tries++) {
             randomName = getRandomName();
-            tries++;
-            if (tries > MAX_TRIES) {
-                throw new IllegalStateException("Couldn't find a unique name after a lot of tries.");
+            if (USED_NAMES.add(randomName)) {
+                return randomName;
             }
-        } while (!USED_NAMES.add(randomName));
-        return randomName;
+        }
+        throw new IllegalStateException("Couldn't find a unique name after a lot of tries.");
     }
 
     private String getRandomName() {
