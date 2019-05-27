@@ -25,33 +25,26 @@ class BankAccount {
         balance -= amount;
     }
 
-    private synchronized void checkIsDepositAllowed(int amount)
-    throws BankAccountActionInvalidException {
+    private void checkIsDepositAllowed(int amount) throws BankAccountActionInvalidException {
         checkIsOpen();
-        if (amount < 0) {
-            throw new BankAccountActionInvalidException("Cannot deposit or withdraw negative amount");
-        }
+        check(amount < 0, "Cannot deposit or withdraw negative amount");
     }
 
-    private synchronized void checkIsWithdrawalAllowed(int amount)
-    throws BankAccountActionInvalidException {
+    private void checkIsWithdrawalAllowed(int amount) throws BankAccountActionInvalidException {
         checkIsOpen();
-        if (amount < 0) {
-            throw new BankAccountActionInvalidException("Cannot deposit or withdraw negative amount");
-        }
-        if (balance == 0) {
-            throw new BankAccountActionInvalidException(
-                "Cannot withdraw money from an empty account");
-        }
-        if (amount > balance) {
-            throw new BankAccountActionInvalidException(
-                "Cannot withdraw more money than is currently in the account");
-        }
+        check(amount < 0, "Cannot deposit or withdraw negative amount");
+        check(balance == 0, "Cannot withdraw money from an empty account");
+        check(amount > balance, "Cannot withdraw more money than is currently in the account");
     }
 
-    private synchronized void checkIsOpen() throws BankAccountActionInvalidException {
-        if (!open) {
-            throw new BankAccountActionInvalidException("Account closed");
+    private void checkIsOpen() throws BankAccountActionInvalidException {
+        check(!open, "Account closed");
+    }
+
+    private void check(boolean condition, String exceptionMessage)
+    throws BankAccountActionInvalidException {
+        if (condition) {
+            throw new BankAccountActionInvalidException(exceptionMessage);
         }
     }
 
