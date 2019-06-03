@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 class DoublyLinkedList<T> {
 
     private Node<T> first;
@@ -28,27 +30,37 @@ class DoublyLinkedList<T> {
     }
 
     T pop() {
-        Node<T> oldLast = last;
-        if (oldLast.previous != null) {
-            oldLast.previous.next = null;
-            last = oldLast.previous;
-            if (first == oldLast) {
-                first = last;
-            }
+        checkNotEmpty();
+        T value = last.value;
+        last = last.previous;
+        if (last == null) {
+            first = null;
+        } else {
+            last.next = null;
         }
-        return oldLast.value;
+        return value;
     }
 
     T shift() {
-        Node<T> oldFirst = first;
-        if (oldFirst.next != null) {
-            oldFirst.next.previous = null;
-            first = oldFirst.next;
-            if (last == oldFirst) {
-                last = first;
-            }
+        checkNotEmpty();
+        T value = first.value;
+        first = first.next;
+        if (first == null) {
+            last = null;
+        } else {
+            first.previous = null;
         }
-        return oldFirst.value;
+        return value;
+    }
+
+    boolean isEmpty() {
+        return first == null;
+    }
+
+    private void checkNotEmpty() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty!");
+        }
     }
 
     private class Node<S> {

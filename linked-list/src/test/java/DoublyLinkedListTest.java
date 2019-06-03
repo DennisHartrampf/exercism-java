@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -47,6 +49,32 @@ public class DoublyLinkedListTest {
 
         assertThat(list.pop(), is(10));
         assertThat(list.pop(), is(20));
+    }
+
+    @Test
+    public void testIsEmpty() {
+        DoublyLinkedList<Object> list = new DoublyLinkedList<>();
+        assertThat(list.isEmpty(), is(Boolean.TRUE));
+        list.push(null);
+        assertThat(list.isEmpty(), is(Boolean.FALSE));
+        list.pop();
+        assertThat(list.isEmpty(), is(Boolean.TRUE));
+        list.unshift(null);
+        assertThat(list.isEmpty(), is(Boolean.FALSE));
+        list.shift();
+        assertThat(list.isEmpty(), is(Boolean.TRUE));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testPopOnEmptyListThrows() {
+        DoublyLinkedList<Object> list = new DoublyLinkedList<>();
+        list.pop();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testShiftOnEmptyListThrows() {
+        DoublyLinkedList<Object> list = new DoublyLinkedList<>();
+        list.shift();
     }
 
     @Test
